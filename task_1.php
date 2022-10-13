@@ -12,45 +12,6 @@ class TelegraphText
     // $telegraphText->author = 'viktor';
     // в $name поместиться "author"
     // в $value поместиться "viktor"
-    public function __set($name, $value) {
-        if($name == 'author') {
-            // if(strlen($value) > 120) return;
-            // $this->author = $value;
-            if(strlen($value) <= 120) {
-                $this->author = $value;
-            } 
-        }
-        if($name == 'slug') {
-            if(preg_match('~^[a-z0-9_\-]*$~i', $value)) { 
-                $this->slug = $value;
-            }
-        }
-        if($name == 'published') {
-            $now = new DateTime();
-            if($this->published >= $now) {
-                $this->published = $value;
-            }
-        }
-        if($name == 'text') {
-            $this->storeText();
-        }
-    }
-
-    public function __get($name) {
-        if($name == 'author') {
-            return $this->author;
-        }
-        if($name == 'slug') {
-            return $this->slug;
-        }
-        if($name == 'published') {
-            return $this->published;
-        }
-        if($name == 'text') {
-            return $this->loadText();
-        }
-    }
-
     public function __construct($author, $slug)
     {
         $this->author = $author;
@@ -58,8 +19,47 @@ class TelegraphText
         $this->published = date('Y-m-d H:i:s');
     }
 
-    private function storeText()
+    public function __set($name, $value) 
     {
+        if ($name == 'author') {
+            // if(strlen($value) > 120) return;
+            // $this->author = $value;
+            if (strlen($value) <= 120) {
+                $this->author = $value;
+        } 
+    }
+        if ($name == 'slug') {
+            if(preg_match('~^[a-z0-9_\-]*$~i', $value)) { 
+                $this->slug = $value;
+            }
+        }
+        if ($name == 'published') {
+            $now = new DateTime();
+            if($this->published >= $now) {
+                $this->published = $value;
+            }
+        }
+        if ($name == 'text') {
+            $this->storeText();
+        }
+    }
+
+    public function __get($name) {
+        if ($name == 'author') {
+            return $this->author;
+        }
+        if ($name == 'slug') {
+            return $this->slug;
+        }
+        if ($name == 'published') {
+            return $this->published;
+        }
+        if ($name == 'text') {
+            return $this->loadText();
+        }
+    }
+
+    private function storeText() {
         $storeText = [
             'text' => $this->text, 
             'title' => $this->title, 
