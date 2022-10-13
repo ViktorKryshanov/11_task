@@ -40,6 +40,7 @@ class TelegraphText
             }
         }
         if ($name == 'text') {
+            $this->text = $value;
             $this->storeText();
         }
     }
